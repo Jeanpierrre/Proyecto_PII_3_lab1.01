@@ -1,0 +1,4 @@
+ToolSet: 5.0 (local)@C:\MinGW_SFML-20220622T021911Z-001\MinGW_SFML
+Options: 
+
+Options:-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2021.3.4/bin/ninja/win/ninja.exe

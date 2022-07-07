@@ -1,0 +1,133 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0/include",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/include",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0/include-fixed",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/mingw32/include"
+					],
+					"linkDirectories" : 
+					[
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/mingw32/lib",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex"
+					]
+				},
+				"path" : "C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/bin/gcc.exe",
+				"version" : "6.3.0"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0/include/c++",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0/include/c++/mingw32",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0/include/c++/backward",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0/include",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/include",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0/include-fixed",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/mingw32/include"
+					],
+					"linkDirectories" : 
+					[
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc/mingw32/6.3.0",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib/gcc",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/mingw32/lib",
+						"C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"mingw32",
+						"gcc_s",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"mingw32",
+						"gcc_s",
+						"gcc",
+						"moldname",
+						"mingwex"
+					]
+				},
+				"path" : "C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/bin/c++.exe",
+				"version" : "6.3.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"mm",
+				"mpp",
+				"CPP",
+				"ixx",
+				"cppm"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"implicit" : {},
+				"path" : "C:/MinGW_SFML-20220622T021911Z-001/MinGW_SFML/bin/windres.exe"
+			},
+			"language" : "RC",
+			"sourceFileExtensions" : 
+			[
+				"rc",
+				"RC"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

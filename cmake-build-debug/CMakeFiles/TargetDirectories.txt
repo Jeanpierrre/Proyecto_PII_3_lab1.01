@@ -1,0 +1,3 @@
+C:/Users/sotom/CLionProjects/Allego/cmake-build-debug/CMakeFiles/Allego.dir
+C:/Users/sotom/CLionProjects/Allego/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/sotom/CLionProjects/Allego/cmake-build-debug/CMakeFiles/rebuild_cache.dir
