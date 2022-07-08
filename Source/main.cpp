@@ -4,7 +4,21 @@
 #include <random>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
+#include <vector>
+#include <SFML/Audio.hpp>
+#include <iostream>
+#include <chrono>
+#include <thread>
+#include <algorithm>
+#include<iostream>
+#include "unistd.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include "Windows.h"
+#include <iostream>
+#include <chrono>
+#include <thread>
+#include<ctime>
 using namespace std;
 
 class Bala{
@@ -46,6 +60,7 @@ private:
     direccion dir;
 public:
     sf::Sprite sprite;
+    bool muerte_enemigo=true;
     bool error;
     Enemigo(){
         textura.loadFromFile("C:\\\\Users\\\\sotom\\\\CLionProjects\\\\Allego\\\\Source\\\\ovni.png");
@@ -83,12 +98,15 @@ public:
         }
     }
 
-    bool choque_ovni_bala(Bala bala_nave){
-        //posicion x e y de la nave//generar colicion
-        if(bala_nave.sprite.getPosition().x== sprite.getPosition().x && bala_nave.sprite.getPosition().y== sprite.getPosition().y){
-            return true;
+    bool muerte_ovni_bala(Bala& bala_nave){
+        if(bala_nave.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds())){
+            muerte_enemigo=false;
+            //bala_ovni.sprite.setPosition(0,-20);
+
+            return 1;
+            cout<<"Enemigo muerto"<<endl;
         }
-        return false;
+        return 0;
     }
 
 };
@@ -152,7 +170,7 @@ public:
         }
     }
 
-    void muerte_tocar(Enemigo& enemigo){
+    bool muerte_tocar(Enemigo& enemigo){
         if(enemigo.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds())){
             muerte=true;
             cout<<"Jugador muerto al tocar ovni"<<endl;
@@ -166,6 +184,8 @@ public:
 
 
 
+vector<int> guardar;
+
 
 Objeto nave;
 //vector<Bala> balas;
@@ -178,16 +198,61 @@ Enemigo *enemy;
 bool derecha=true;
 bool libre=true;
 //vector<Enemigo> enemigos;
+bool tiempo=true;
+bool validar=true;
 void gameplay();
 void crear_balas();
 void crear_enemigos();
 int enemigos_maximos=30;
 int velocidad=0.01;
 void iniciar_enemigos();
+int valor=0;
+bool juego=true;
+bool sonido=true;
+
+sf::SoundBuffer buffer;
+sf::Sound sound;
+
 
 int main() {
+
+    if(!buffer.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\bala.wav")){
+        sonido=false;
+        cout<<"No carga"<<endl;
+    }
+    //buffer.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\s_bala.wav");
+
+    sound.setBuffer(buffer);
+
+
+
+    guardar.push_back(50);
     srand (time(NULL));
     iniciar_enemigos();
+    sf::Font tipo_letra;
+    tipo_letra.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\fuente.otf");
+    sf::Text score;
+    score.setFont(tipo_letra);
+    score.setString(to_string(valor));
+    score.setCharacterSize(42);
+    score.setColor(sf::Color::Black);
+    score.setPosition(500,0);
+//tiempo
+    sf::Clock clock;
+    sf::Time time;
+
+
+
+
+//
+//    sf::Font letra;
+//    letra.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\fuente.otf");
+//    sf::Text puntaje_final;
+//    puntaje_final.setFont(tipo_letra);
+//    puntaje_final.setString(to_string(valor));
+//    puntaje_final.setCharacterSize(42);
+//    puntaje_final.setColor(sf::Color::Black);
+//    puntaje_final.setPosition(500,0);
 
 //    for(int i=0;i<enemigos_maximos;i++){
 //        if(i==(valor-1)){
@@ -205,7 +270,7 @@ int main() {
 
     sf::RenderWindow Ventana(sf::VideoMode(800,600),"Juego",sf::Style::Default);
     //limite
-    Ventana.setFramerateLimit(30);
+    Ventana.setFramerateLimit(80);
 
     //texturaDA
     sf::Texture textura;
@@ -213,12 +278,15 @@ int main() {
     sf::Sprite background_sprite;
     background_sprite.setTexture(textura);
 
+    sf::Font tipo;
+    tipo.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\fuente.otf");
     sf::Text text;
+    text.setFont(tipo);
     text.setString("Perdiste");
     text.setCharacterSize(42);
     text.setColor(sf::Color::Red);
     //text.setStyle(sf::Text::Bold);
-    text.setPosition(Ventana.getPosition().x/2,Ventana.getPosition().y/2);
+    text.setPosition(300,300);
 
     //sf::Texture textura;
 //
@@ -228,7 +296,13 @@ int main() {
 //    sprite.setScale(0.2,0.2);
     //textura;
 
-    while(Ventana.isOpen()){
+    while(Ventana.isOpen() ){
+        sf::Text score;
+        score.setFont(tipo_letra);
+        score.setString(to_string(valor));
+        if(tiempo){
+            time+=clock.getElapsedTime();
+        }
         gameplay();
         sf::Event _event;
 
@@ -249,14 +323,43 @@ int main() {
             Ventana.draw(bala_ovni[0].sprite);
         }
         for(int i=0;i<enemigos_maximos;i++){
-            Ventana.draw(enemy[i].sprite);
+            if(enemy[i].muerte_enemigo)
+                Ventana.draw(enemy[i].sprite);
         }
         //Ventana.draw(enemy.sprite);
 
-        if(nave.muerte){
-            cout<<"Entro"<<endl;
-            Ventana.draw(text);
+        if(valor==1){
+            if(validar){
+                text.setString("Ganaste en un tiempo de: "+ to_string(time.asSeconds()));
+                text.setPosition(90,300);
+                Ventana.draw(text);
+                tiempo=false;
+//            cout.flush();
+//            usleep(20000000000);
+//            auto start = std::chrono::high_resolution_clock::now();
+//            this_thread::sleep_for(2000ms);
+//            auto end = std::chrono::high_resolution_clock::now();
+                juego=false;
+                cout<<"Ganaste"<<endl;
+                cout<<"Tu tiempo fue de "+to_string(round(time.asSeconds()))<<endl;
+                validar=true;
+            }
+
         }
+
+        if(nave.muerte){
+            //cout<<"Entro"<<endl
+            // ;
+                Ventana.draw(text);
+                juego=false;
+                cout<<"Perdiste"<<endl;
+                cout<<"Tu tiempo fue de "+to_string(round(time.asSeconds()/60))<<endl;
+                cout<<"Quedaron: "<<enemigos_maximos-valor<<" con vida."<<endl;
+                validar=false;
+
+
+        }
+        Ventana.draw(score);
         Ventana.display();
     }
 //    do{
@@ -343,6 +446,15 @@ void gameplay(){
     }
     if(disparo){
         bala[0].sprite.move(0,-4);
+        //buffer.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\s_bala.wav");
+
+        if(sonido){
+            sound.play();
+        }
+
+
+
+
         if(bala[0].sprite.getPosition().y<=-20){
             delete[] bala;
             cout<<"bala muerta en:"<<endl;
@@ -367,12 +479,16 @@ void gameplay(){
     if(libre){
         disparo_ovni=true;
         int random=rand()%30;
-        //cout<<random<<endl;
+
+
+        cout<<random<<endl;
         crear_balas_ovni();
         bala_ovni[0].setup_ovni();
         bala_ovni[0].sprite.setPosition(enemy[random].sprite.getPosition().x,enemy[random].sprite.getPosition().y+10);
 
         libre=false;
+
+
     }
     //cout<<bala_ovni[0].sprite.getPosition().y<<endl;
     if(disparo_ovni){
@@ -386,16 +502,35 @@ void gameplay(){
         }
 
     }
-    /// choque
+//verificar muerte
+    nave.muerte_jugador(bala_ovni[0]);
+    //verificar muerte ovni
     for(int i=0;i<enemigos_maximos;i++){
-        if(enemy[i].choque_ovni_bala(bala[0])){
-            cout<<"Choca"<<endl;
-           // delete[ enemy[i];
+
+        if(disparo){
+            if(enemy[i].muerte_ovni_bala(bala[0])){
+                enemy[i].sprite.setPosition(-20,-20);
+                valor++;
+                delete[] bala;
+                disparo=false;
+            }
         }
+
+        else
+            break;
     }
+
+
+    /// choque
+//    for(int i=0;i<enemigos_maximos;i++){
+//        if(enemy[i].choque_ovni_bala(bala[0])){
+//            cout<<"Choca"<<endl;
+//           // delete[ enemy[i];
+//        }
+//    }
     //verificar muerte juagdor
 
-    nave.muerte_jugador(bala_ovni[0]);
+
 
 
 
