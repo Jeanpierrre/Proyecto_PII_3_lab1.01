@@ -24,7 +24,7 @@ Bala *bala_ovni;
 Bala *bala_ovni2;
 Enemigo *enemy;
 
-//booleanos
+///booleanos
 bool disparo=false;
 bool disparo_ovni=false;
 bool derecha=true;
@@ -33,7 +33,8 @@ bool tiempo=true;
 bool validar=true;
 bool juego=true;
 bool sonido=true;
-///funciones
+
+///funciones que toman las variables globales
 void gameplay();
 void crear_balas();
 void crear_enemigos();
@@ -63,6 +64,12 @@ int main() {
     }
     sound.setBuffer(buffer);
     sound.play();
+    ///fondo
+    sf::Texture textura;
+    textura.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\fotos\\fondo.png");
+    sf::Sprite background_sprite;
+    background_sprite.setTexture(textura);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -77,27 +84,20 @@ int main() {
                         case sf::Keyboard::Up:
                             menu.MoveUp();
                             break;
-
                         case sf::Keyboard::Down:
                             menu.MoveDown();
                             break;
-
                         case sf::Keyboard::Return:
                             switch (menu.GetPressedItem())
                             {
                                 case 0:
-                                    //std::cout << "Play button has been pressed" << std::endl;
                                     play++;
                                     break;
                                 case 1:
                                     salir++;
                                     window.close();
                                     break;
-//                                    std::cout << "Option button has been pressed" << std::endl;
-//                                    break;
-//                                case 2:
-//                                    window.close();
-//                                    break;
+
                             }
 
                             break;
@@ -116,7 +116,7 @@ int main() {
             window.close();
         }
         window.clear();
-
+        window.draw(background_sprite);
         menu.draw(window);
 
         window.display();
@@ -154,13 +154,13 @@ int main() {
 
 
 
-    sf::RenderWindow Ventana(sf::VideoMode(800,600),"Juego",sf::Style::Default);
+    sf::RenderWindow Ventana(sf::VideoMode(800,600),"Space Invaders",sf::Style::Default);
     //limite
     Ventana.setFramerateLimit(80);
 
     //texturaDA
     sf::Texture textura;
-    textura.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\fotos\\fondo.jpg");
+    textura.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\fotos\\fondo.png");
     sf::Sprite background_sprite;
     background_sprite.setTexture(textura);
 
@@ -238,50 +238,13 @@ int main() {
         Ventana.display();
     }
     }
-}
-void crear_balas(){
-    bala=new Bala[1];
 
 }
-void crear_balas_ovni(){
-    bala_ovni=new Bala[1];
-}
-void crear_balas_ovni2(){
-    bala_ovni2=new Bala[1];
-}
-void iniciar_enemigos(){
-    bala=new Bala[1];
-    bala_ovni=new Bala[1];
-    enemy=new Enemigo[enemigos_maximos];
-    float *xp=new float[enemigos_maximos];
-    float *yp=new float[enemigos_maximos];
 
-    yp[0]=30;
-    int valor=enemigos_maximos/3;
-    //posicionar con x y Y      y
-    //80
-    for(int  i=0;i<enemigos_maximos;i++){
-        if(10==i || 20==i ||30==i )
-            yp[i]=yp[i-1]+80;
-        else
-            yp[i]=yp[i-1];
-    }
-    //x
-    //85
-    for(int  i=0;i<enemigos_maximos;i++){
-        xp[i]=xp[i-1]+65;
-        if(10==i || 20==i ||30==i ){
-            xp[i]=65;//para hacer filas
-        }
-    }
-
-    //enemy move
-    for(int i=0;i<enemigos_maximos;i++){
-        enemy[i].sprite.move(xp[i],yp[i]);
-
-    }
-}
-int contador=0;
+void crear_balas();
+void crear_balas_ovni();
+void crear_balas_ovni2();
+///funcion que realiza todo
 void gameplay(){
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::J)){//disparo
@@ -379,3 +342,45 @@ void gameplay(){
     }
 
 };
+
+void crear_balas(){
+    bala=new Bala[1];
+
+}
+void crear_balas_ovni(){
+    bala_ovni=new Bala[1];
+}
+void crear_balas_ovni2(){
+    bala_ovni2=new Bala[1];
+}
+void iniciar_enemigos(){
+    bala=new Bala[1];
+    bala_ovni=new Bala[1];
+    enemy=new Enemigo[enemigos_maximos];
+    float *xp=new float[enemigos_maximos];
+    float *yp=new float[enemigos_maximos];
+
+    yp[0]=30;
+    int valor=enemigos_maximos/3;
+    //posicionar con x y Y      y
+    //80
+    for(int  i=0;i<enemigos_maximos;i++){
+        if(10==i || 20==i ||30==i )
+            yp[i]=yp[i-1]+80;
+        else
+            yp[i]=yp[i-1];
+    }
+    //x
+    //85
+    for(int  i=0;i<enemigos_maximos;i++){
+        xp[i]=xp[i-1]+65;
+        if(10==i || 20==i ||30==i ){
+            xp[i]=65;//para hacer filas
+        }
+    }
+    //enemy move
+    for(int i=0;i<enemigos_maximos;i++){
+        enemy[i].sprite.move(xp[i],yp[i]);
+
+    }
+}

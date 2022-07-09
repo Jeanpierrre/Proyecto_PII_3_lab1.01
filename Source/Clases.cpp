@@ -95,19 +95,11 @@ public:
         textura.loadFromFile("C:\\Users\\sotom\\CLionProjects\\Allego\\Source\\fotos\\nave.png");
         sprite.setTexture(textura);
         sprite.setScale(0.2,0.2);
-
         sprite.setPosition(400,520);
-
-
     }
     bool posicion(){
-
-
-
         if(sprite.getPosition().x>=4 && sprite.getPosition().x<=560){
-
             return true;
-
         }
         else if(sprite.getPosition().x<100){
             sprite.move(-0.05,0);
@@ -115,27 +107,18 @@ public:
         else if(sprite.getPosition().x>100){
             sprite.move(0.05,0);
         }
-
-
     }
-
-
     void muerte_jugador(Bala& bala_ovni){
         if(bala_ovni.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds())){
-
             //cout<<"vida: "<<vida<<endl;
                 muerte=true;
                 //cout<<"Jugador muerto"<<endl;
-
         }
     }
-
     void muerte_tocar(Enemigo& enemigo){
         if(enemigo.sprite.getGlobalBounds().intersects(sprite.getGlobalBounds())){
-
                 muerte=true;
                 //cout<<"Jugador muerto al tocar ovni"<<endl;
-
         }
     }
 
